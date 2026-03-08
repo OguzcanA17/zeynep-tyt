@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<p>Türkçe: 40 soru</p>
+<p>Matematik: 30 soru</p>
+<p>Fen: 20 soru</p>
+<p>Sosyal: 20 soru</p>
+</div>
+
+<div class="card">
+<h2>Net Hesaplama</h2>
+
+<input id="dogru" placeholder="Doğru">
+<input id="yanlis" placeholder="Yanlış">
+
+<br><br>
+
+<button onclick="hesapla()">Net Hesapla</button>
+
+<p id="sonuc"></p>
+
+</div>
+
+<div class="card">
+<h2>Bugünün Örnek Sorusu</h2>
+<p id="soru"></p>
+</div>
+
+<script>
+
+const motivasyon=[
+"Bugün çözdüğün her soru geleceğini değiştiriyor ❤️",
+"Ben sana inanıyorum Zeynep ❤️",
+"90 gün sonra kendinle gurur duyacaksın",
+"Pes etme, çok iyi gidiyorsun",
+"Hayallerimize her gün biraz daha yaklaşıyoruz ❤️"
+]
+
+const sorular=[
+"Bir sayının %20'si 40 ise sayı kaçtır? (Cevap:200)",
+"Hücrenin yönetim merkezi nedir? (Cevap:Çekirdek)",
+"Osmanlı'nın ilk başkenti neresidir? (Cevap:Bursa)",
+"İvme neyin değişimidir? (Cevap:Hız)",
+"Dünya'nın şekli nedir? (Cevap:Geoit)"
+]
+
+function rastgeleMesaj(){
+let m=motivasyon[Math.floor(Math.random()*motivasyon.length)]
+document.getElementById("mesaj").innerText=m
+}
+
+function rastgeleSoru(){
+let s=sorular[Math.floor(Math.random()*sorular.length)]
+document.getElementById("soru").innerText=s
+}
+
+function hesapla(){
+let d=document.getElementById("dogru").value
+let y=document.getElementById("yanlis").value
+let net=d-(y/4)
+
+document.getElementById("sonuc").innerText="Net: "+net
+}
+
+rastgeleMesaj()
+rastgeleSoru()
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('sw.js')
+}
+
+</script>
+
+</body>
+</html>
