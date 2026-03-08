@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeynebin TYT Macerası v2 ❤️</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+text-align:center;
+padding:20px;
+}
+
+h1{
+margin-bottom:5px;
+}
+
+.progress{
+width:100%;
+background:#ddd;
+border-radius:10px;
+margin:10px 0;
+}
+
+.bar{
+height:15px;
+background:#00b894;
+width:0%;
+border-radius:10px;
+}
+
+.dayNav{
+display:flex;
+overflow-x:auto;
+gap:6px;
+margin:15px 0;
+}
+
+.dayBtn{
+padding:8px;
+border:none;
+border-radius:8px;
+background:#ddd;
+cursor:pointer;
+min-width:40px;
+}
+
+.done{
+background:#00b894;
+color:white;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:10px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.videoBtn{
+display:block;
+margin:5px;
+padding:10px;
+background:#6c5ce7;
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+
+.question{
+background:#fafafa;
+border:1px solid #ddd;
+border-radius:8px;
+padding:10px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#ff7675;
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>❤️ Zeynebin TYT Macerası v2</h1>
+
+<div id="motivation"></div>
+
+<div class="progress">
+<div class="bar" id="progressBar"></div>
+</div>
+
+<div class="dayNav" id="dayNav"></div>
+
+<div class="card" id="content">
+Gün seç
+</div>
+
+<script>
+
+const motivation=[
+"Bugün çözdüğün her soru seni hedefe yaklaştırıyor ❤️",
+"Pes etme, başaracaksın!",
+"Her gün biraz daha iyi oluyorsun.",
+"Sen düşündüğünden daha güçlüsün.",
+"Ben sana inanıyorum ❤️"
+]
+
+document.getElementById("motivation").innerHTML=
+"<h3>"+motivation[Math.floor(Math.random()*motivation.length)]+"</h3>"
+
+const questionBank=[
+"Bir sayının %20'si 40 ise sayı kaçtır?",
+"Hücrenin yönetim merkezi nedir?",
+"Osmanlı Devleti'nin ilk başkenti neresidir?",
+"İvme neyin değişimidir?",
+"Dünya'nın şekli nedir?",
+"Bir üçgenin iç açıları toplamı kaçtır?",
+"Fotosentez hangi organelde gerçekleşir?",
+"Su kaç derecede kaynar?",
+"Türkiye'nin başkenti neresidir?",
+"DNA'nın açılımı nedir?"
+]
+
+function generateQuestions(){
+
+let q=""
+
+for(let i=1;i<=30;i++){
+
+let text=questionBank[Math.floor(Math.random()*questionBank.length)]
+
+q+=`
+<div class="question">
+<b>Soru ${i}</b><br>
+${text}
+</div>
+`
+
+}
+
+return q
+
+}
+
+const nav=document.getElementById("dayNav")
+
+for(let i=1;i<=90;i++){
+
+const b=document.createElement("button")
+
+b.className="dayBtn"
+b.innerText=i
+
+if(localStorage.getItem("day"+i)) b.classList.add("done")
+
+b.onclick=()=>loadDay(i)
+
+nav.appendChild(b)
+
+}
+
+function loadDay(day){
+
+document.getElementById("content").innerHTML=`
+
+<h2>${day}. Gün</h2>
+
+<a class="videoBtn" target="_blank"
+href="https://www.youtube.com/results?search_query=tyt+paragraf">
+Türkçe Video
+</a>
+
+<a class="videoBtn" target="_blank"
+href="https://www.youtube.com/results?search_query=tyt+temel+kavramlar">
+Matematik Video
+</a>
+
+<h3>Bugünün Soruları</h3>
+
+${generateQuestions()}
+
+<button onclick="completeDay(${day})">
+Günü Tamamla
+</button>
+
+`
+
+}
+
+function completeDay(day){
+
+localStorage.setItem("day"+day,"done")
+
+alert(day+". günü tamamladın ❤️")
+
+location.reload()
+
+}
+
+function updateProgress(){
+
+let done=0
+
+for(let i=1;i<=90;i++){
+
+if(localStorage.getItem("day"+i)) done++
+
+}
+
+let percent=(done/90)*100
+
+document.getElementById("progressBar").style.width=percent+"%"
+
+}
+
+updateProgress()
+
+</script>
+
+</body>
+</html>
