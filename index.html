@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zeynebin TYT Macerası v2 ❤️</title>
+<title>Zeynebin TYT Macerası ❤️</title>
 
 <style>
 
@@ -14,69 +14,38 @@ text-align:center;
 padding:20px;
 }
 
-h1{
-margin-bottom:5px;
-}
-
-.progress{
-width:100%;
-background:#ddd;
-border-radius:10px;
-margin:10px 0;
-}
-
-.bar{
-height:15px;
-background:#00b894;
-width:0%;
-border-radius:10px;
-}
-
 .dayNav{
 display:flex;
 overflow-x:auto;
-gap:6px;
-margin:15px 0;
+gap:5px;
+margin-bottom:15px;
 }
 
 .dayBtn{
 padding:8px;
 border:none;
-border-radius:8px;
 background:#ddd;
+border-radius:6px;
 cursor:pointer;
-min-width:40px;
-}
-
-.done{
-background:#00b894;
-color:white;
+min-width:35px;
 }
 
 .card{
 background:white;
 padding:20px;
-margin:10px;
 border-radius:10px;
+margin:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
-.videoBtn{
-display:block;
-margin:5px;
-padding:10px;
-background:#6c5ce7;
-color:white;
-text-decoration:none;
-border-radius:8px;
+.question{
+text-align:left;
+margin:15px 0;
 }
 
-.question{
-background:#fafafa;
-border:1px solid #ddd;
-border-radius:8px;
-padding:10px;
-margin:10px;
+.option{
+display:block;
+margin:4px;
 }
 
 button{
@@ -89,17 +58,12 @@ cursor:pointer;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<h1>❤️ Zeynebin TYT Macerası v2</h1>
-
-<div id="motivation"></div>
-
-<div class="progress">
-<div class="bar" id="progressBar"></div>
-</div>
+<h1>❤️ Zeynebin TYT Macerası</h1>
 
 <div class="dayNav" id="dayNav"></div>
 
@@ -109,50 +73,36 @@ Gün seç
 
 <script>
 
-const motivation=[
-"Bugün çözdüğün her soru seni hedefe yaklaştırıyor ❤️",
-"Pes etme, başaracaksın!",
-"Her gün biraz daha iyi oluyorsun.",
-"Sen düşündüğünden daha güçlüsün.",
-"Ben sana inanıyorum ❤️"
-]
+const questions=[
 
-document.getElementById("motivation").innerHTML=
-"<h3>"+motivation[Math.floor(Math.random()*motivation.length)]+"</h3>"
+{
+q:"Bir sayının %20'si 40 ise sayı kaçtır?",
+a:"100",
+b:"150",
+c:"200",
+d:"300",
+ans:"c"
+},
 
-const questionBank=[
-"Bir sayının %20'si 40 ise sayı kaçtır?",
-"Hücrenin yönetim merkezi nedir?",
-"Osmanlı Devleti'nin ilk başkenti neresidir?",
-"İvme neyin değişimidir?",
-"Dünya'nın şekli nedir?",
-"Bir üçgenin iç açıları toplamı kaçtır?",
-"Fotosentez hangi organelde gerçekleşir?",
-"Su kaç derecede kaynar?",
-"Türkiye'nin başkenti neresidir?",
-"DNA'nın açılımı nedir?"
-]
+{
+q:"Hücrenin yönetim merkezi nedir?",
+a:"Mitokondri",
+b:"Çekirdek",
+c:"Ribozom",
+d:"Lizozom",
+ans:"b"
+},
 
-function generateQuestions(){
-
-let q=""
-
-for(let i=1;i<=30;i++){
-
-let text=questionBank[Math.floor(Math.random()*questionBank.length)]
-
-q+=`
-<div class="question">
-<b>Soru ${i}</b><br>
-${text}
-</div>
-`
-
+{
+q:"Türkiye'nin başkenti neresidir?",
+a:"İstanbul",
+b:"Ankara",
+c:"İzmir",
+d:"Bursa",
+ans:"b"
 }
 
-return q
-
-}
+]
 
 const nav=document.getElementById("dayNav")
 
@@ -163,8 +113,6 @@ const b=document.createElement("button")
 b.className="dayBtn"
 b.innerText=i
 
-if(localStorage.getItem("day"+i)) b.classList.add("done")
-
 b.onclick=()=>loadDay(i)
 
 nav.appendChild(b)
@@ -173,59 +121,65 @@ nav.appendChild(b)
 
 function loadDay(day){
 
-document.getElementById("content").innerHTML=`
+let html=`<h2>${day}. Gün Testi</h2>`
 
-<h2>${day}. Gün</h2>
+questions.forEach((q,i)=>{
 
-<a class="videoBtn" target="_blank"
-href="https://www.youtube.com/results?search_query=tyt+paragraf">
-Türkçe Video
-</a>
+html+=`
 
-<a class="videoBtn" target="_blank"
-href="https://www.youtube.com/results?search_query=tyt+temel+kavramlar">
-Matematik Video
-</a>
+<div class="question">
 
-<h3>Bugünün Soruları</h3>
+<b>${i+1}. ${q.q}</b>
 
-${generateQuestions()}
+<label class="option">
+<input type="radio" name="q${i}" value="a"> A) ${q.a}
+</label>
 
-<button onclick="completeDay(${day})">
-Günü Tamamla
-</button>
+<label class="option">
+<input type="radio" name="q${i}" value="b"> B) ${q.b}
+</label>
+
+<label class="option">
+<input type="radio" name="q${i}" value="c"> C) ${q.c}
+</label>
+
+<label class="option">
+<input type="radio" name="q${i}" value="d"> D) ${q.d}
+</label>
+
+</div>
 
 `
 
-}
+})
 
-function completeDay(day){
+html+=`<button onclick="finishTest()">Testi Bitir</button>`
 
-localStorage.setItem("day"+day,"done")
-
-alert(day+". günü tamamladın ❤️")
-
-location.reload()
+document.getElementById("content").innerHTML=html
 
 }
 
-function updateProgress(){
+function finishTest(){
 
-let done=0
+let correct=0
 
-for(let i=1;i<=90;i++){
+questions.forEach((q,i)=>{
 
-if(localStorage.getItem("day"+i)) done++
+let sel=document.querySelector('input[name="q'+i+'"]:checked')
 
-}
+if(sel && sel.value===q.ans){
 
-let percent=(done/90)*100
-
-document.getElementById("progressBar").style.width=percent+"%"
+correct++
 
 }
 
-updateProgress()
+})
+
+let wrong=questions.length-correct
+
+alert("Doğru: "+correct+"  Yanlış: "+wrong)
+
+}
 
 </script>
 
